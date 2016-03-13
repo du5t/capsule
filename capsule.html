@@ -1,9 +1,4 @@
 <!doctype html>
-<!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
 <html>
   <head>
     <title>Capsule</title>
@@ -21,7 +16,7 @@
         overflow: hidden;
         max-width: 400px;
       }
-     .journalet-menu {
+     #journalet-menu {
        z-index: 999;
        position: fixed;
        top: 0;
@@ -34,7 +29,7 @@
        border-radius: 5px;
      }
 
-     .journalet-selected-content {
+     #journalet-selected-content {
        position: relative;
        width: 100%;
        /* overflow-wrap: break-word; */
@@ -44,16 +39,16 @@
        height: 40%;
      }
 
-     .journalet-selected-content {}
+     #journalet-selected-content {}
 
-     .journalet-hrule {
+     #journalet-hrule {
        background-color: #EEE;
        color: #EEE;
        height:1px;
        border:none;
      }
 
-     .journalet-title {
+     #journalet-title {
        color: #EEE;
        text-align: center;
        background: gray;
@@ -65,7 +60,7 @@
        border-right: 0.25rem;
      }
 
-     .journalet-comment-field {
+     #journalet-comment-field {
        background-color: steelblue;
        border-width: thick;
        border-color: white;
@@ -74,13 +69,13 @@
        overflow-y: visible;
      }
 
-     .journalet-controls {
+     #journalet-controls {
        display: block;
        text-align: center;
        padding: 0.5rem;
      }
 
-     journalet-button {
+     #journalet-button {
        background-color: darkslategrey;
        color: #EEE;
        border: 0;
@@ -99,18 +94,16 @@
     <script src="capsule.js"></script>
   </head>
   <body>
-    <div id="status"></div>
-    <img id="image-result" hidden>
-    <div class="journalet-menu">
-      <div class="journalet-title">Capsule</div>
-      <div class="journalet-selected-content">
+    <div id="journalet-menu">
+      <div id="journalet-title">Capsule</div>
+      <div id="journalet-selected-content">
         outerHTML of getSelectedContent goes here
       </div>
-      <hr class="journalet-hrule" />
-      <div class="journalet-comment-field">
-        Comments go here.
+      <hr id="journalet-hrule" />
+      <div id="journalet-comment-field">
+        Comments go here
       </div>
-      <div class="journalet-controls">
+      <div id="journalet-controls">
         <button>Cancel</button>
         <button>Send</button>
       </div>
