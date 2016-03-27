@@ -10,21 +10,14 @@
   "keywords": [
     "cypherspace",
     "spaceship",
+    "capsule",
     "ssb",
+    "scuttlebot",
     "swarmbot"
   ],
   "author": "du5t",
   "license": "AGPL-3.0",
   "dependencies": {
-    "async": "^1.5.2",
-    "cheerio": "^0.20.0",
-    "chloride": "^2.0.3",
-    "crypto": "0.0.3",
-    "pull-stream": "^3.2.0",
-    "request": "^2.69.0",
-    "ssb-client": "^3.0.1",
-    "striptags": "^2.1.1",
-    "to-markdown": "^2.0.1"
   },
   "devDependencies": {
     "browserify": "^13.0.0"

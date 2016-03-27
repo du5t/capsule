@@ -17,9 +17,10 @@ nothing works past here yet :\
 
 ## TODO
 
-- [ ] strip out non-UI code from addon
-- [ ] build proper fork of [ssbify](https://github.com/krl/ssbify) that takes an
+- [x] strip out non-UI code from addon
+- [x] build proper fork of [ssbify](https://github.com/krl/ssbify) that takes an
   html string
+    - see [ssbify-string](https://github.com/du5t/ssbify-string)
 - [ ] write handler script using above fork
 - [ ] automate
   xdg-open/open/[windows registry horror](https://msdn.microsoft.com/en-us/library/aa767914(v=vs.85).aspx)
