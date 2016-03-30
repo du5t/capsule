@@ -21,7 +21,8 @@ nothing works past here yet :\
 - [x] build proper fork of [ssbify](https://github.com/krl/ssbify) that takes an
   html string
     - see [ssbify-string](https://github.com/du5t/ssbify-string)
-- [ ] write handler script using above fork
+- [ ] write parser/handler script using above fork
+- [ ] add comment field to serialiser and parser
 - [ ] automate
   xdg-open/open/[windows registry horror](https://msdn.microsoft.com/en-us/library/aa767914(v=vs.85).aspx)
   registration
