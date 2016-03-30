@@ -1,10 +1,7 @@
-// var ssbClient = require('ssb-client')
-// var ssbify = require('./lib/ssbify-browser.js')
-
 var getSelectedHTML = function() {
   chrome.tabs.query({active: true}, function(tabs) {
     var tab = tabs[0]
-    debugger
+
     chrome.tabs.executeScript(
       {
         file: './serializeSelectedHTML.js',
@@ -16,31 +13,45 @@ var getSelectedHTML = function() {
 }
 
 var renderSelectedHTML = function(selection) {
-  debugger
   const parsedSelection = JSON.parse(selection)  
-
-// TODO parse CSS and include also
-//   const styleString = '<style>'
-//           .concat(parsedSelection.css.reduce((cssStr, cssObj) => 
-//                   cssStr.concat(JSON.stringify(cssObj)), ''))
-//           .concat('</style>')
   
   var modify = []
-  /* iframe.querySelectorAll('img').map(function (i, el) { modify.push(el) }) */
 
-  const selectedBox = document.getElementById('journalet-selected-content')
+  const selectedBox = document.getElementById('capsule-selected-content')
+  
   if (parsedSelection.html) {
     selectedBox.innerHTML = parsedSelection.html
   }
 }
 
-var sendHTML = function(htmlString, url) {
-  ssbify(htmlString, { url: url, ignoreBrokenImgLinks: true },
-         function (err, res) {
-           if (err) throw err
-           console.log(res)
-           alert(res)
-         })
+var sendHTML = function(htmlString) {
+  chrome.tabs.getSelected(function(selectedTab) {
+    let serialisedURI = 'ssb-capsule://?body='
+                          .concat(htmlString)
+                          .concat('&src=')
+                          .concat(selectedTab.url)
+
+    const serialiserTabProps = {
+      url: serialisedURI,
+      active: true
+    }
+
+    console.log('launching a capsule...')
+    chrome.tabs.create(serialiserTabProps, function(URITab) {
+      // TODO this doesn't close the new tab
+      chrome.tabs.remove(URITab.id)
+    })
+  })
+}
+
+var hookToElements = function() {
+  const sendButton = document.getElementById('capsule-send')
+  sendButton.addEventListener('click', function() {
+    const selectedBox = document.getElementById('capsule-selected-content')
+
+    sendHTML(selectedBox.innerHTML)
+  })
 }
 
 document.addEventListener('DOMContentLoaded', getSelectedHTML)
+document.addEventListener('DOMContentLoaded', hookToElements)
