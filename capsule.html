@@ -16,7 +16,7 @@
         overflow: hidden;
         max-width: 400px;
       }
-     #journalet-menu {
+     #capsule-menu {
        z-index: 999;
        position: fixed;
        top: 0;
@@ -29,7 +29,7 @@
        border-radius: 5px;
      }
 
-     #journalet-selected-content {
+     #capsule-selected-content {
        position: relative;
        width: 100%;
        /* overflow-wrap: break-word; */
@@ -39,16 +39,16 @@
        height: 40%;
      }
 
-     #journalet-selected-content {}
+     #capsule-selected-content {}
 
-     #journalet-hrule {
+     #capsule-hrule {
        background-color: #EEE;
        color: #EEE;
        height:1px;
        border:none;
      }
 
-     #journalet-title {
+     #capsule-title {
        color: #EEE;
        text-align: center;
        background: gray;
@@ -60,7 +60,7 @@
        border-right: 0.25rem;
      }
 
-     #journalet-comment-field {
+     #capsule-comment-field {
        background-color: steelblue;
        border-width: thick;
        border-color: white;
@@ -69,13 +69,13 @@
        overflow-y: visible;
      }
 
-     #journalet-controls {
+     #capsule-controls {
        display: block;
        text-align: center;
        padding: 0.5rem;
      }
 
-     #journalet-button {
+     #capsule-button {
        background-color: darkslategrey;
        color: #EEE;
        border: 0;
@@ -91,22 +91,20 @@
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
      -->
-    <script src="capsule-libs.js"></script>
     <script src="capsule.js"></script>
   </head>
   <body>
-    <div id="journalet-menu">
-      <div id="journalet-title">Capsule</div>
-      <div id="journalet-selected-content">
+    <div id="capsule-menu">
+      <div id="capsule-title">Capsule</div>
+      <div id="capsule-selected-content">
         no selected HTML could be parsed :(
       </div>
-      <hr id="journalet-hrule" />
-      <div id="journalet-comment-field">
+      <hr id="capsule-hrule" />
+      <div id="capsule-comment-field">
         Comments go here
       </div>
-      <div id="journalet-controls">
-        <button>Cancel</button>
-        <button>Send</button>
+      <div id="capsule-controls">
+        <button id="capsule-send">Send</button>
       </div>
     </div>
   </body>
