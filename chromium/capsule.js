@@ -35,9 +35,10 @@ var encodeHTMLString = function(htmlString) {
 
 var sendHTML = function(htmlString) {
   chrome.tabs.getSelected(function(selectedTab) {
-    let serialisedURI = encodeURI('ssb-capsule://transmit?body='
-                                    .concat(htmlString)
-                                    .concat('&src=').concat(selectedTab.url))
+    let serialisedURI = encodeURI('ssb-capsule://?body='
+                                    .concat(encodeHTMLString(htmlString))
+                                    .concat('&src=').concat(selectedTab.url)
+                                    .concat('&title=').concat(selectedTab.title))
       
     const serialiserTabProps = {
       url: serialisedURI,
