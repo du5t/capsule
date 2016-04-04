@@ -15,5 +15,12 @@
     "swarmbot"
   ],
   "author": "du5t",
-  "license": "AGPL-3.0"
+  "license": "AGPL-3.0",
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "ssb-client": "^3.0.1"
+  },
+  "dependencies": {
+    "ssbify-string": "git://github.com/du5t/ssbify-string.git"
+  }
 }

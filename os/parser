@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+
+var fs = require('fs')
+fs.writeFileSync('capsule.log', 'node parser was called but did not catch', 'utf8')
+
+var url = require('url')
+
+// parse URL, split up query params
+var uri = process.argv[2]
+var parsedURI = url.parse(uri)
+payloadArray = parsedURI.query.split(/[\=\&]/)
+
+// convert to key-val dict
+var payload = {}
+for (var i = 0, len = payloadArray.length ; i<len ; i+=2) {
+  payload[payloadArray[i]] = (payloadArray[i+1])
+}
+
+// decode body from base64
+payload.body = unescape(new Buffer(payload.body, 'base64').toString())
+payload.title = unescape(payload.title)
+
+// ssbify the dang thing, finally
+var ssbifyString = require('ssbify-string')
+var ssbClient = require('ssb-client')
+
+ssbClient(function (err, sbot) {
+  if (err) fs.writeFileSync('capsule.log', err, 'utf8')
+
+  ssbifyString(
+    sbot, payload.body,
+    { ignoreBrokenLinks: true, url: payload.src, title: payload.title },
+    function(err, res) {
+      if (err) fs.writeFileSync('capsule.log', err, 'utf8')
+
+      // publish a message
+      sbot.publish({ type: 'post', text: res, channel: 'test' }, 
+                   function (err, msg) {
+                     if (err) fs.writeFileSync('capsule.log', err, 'utf8')
+                   })
+
+    })
+})
