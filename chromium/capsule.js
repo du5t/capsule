@@ -24,6 +24,15 @@ var renderSelectedHTML = function(selection) {
   }
 }
 
+var encodeHTMLString = function(htmlString) {
+  // see:
+  // https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s06.html
+  // for how terrible this can get
+
+  // anyway we're just going to base64 it
+  return btoa(encodeURIComponent(htmlString))
+}
+
 var sendHTML = function(htmlString) {
   chrome.tabs.getSelected(function(selectedTab) {
     let serialisedURI = encodeURI('ssb-capsule://transmit?body='
