@@ -25,7 +25,6 @@ Categories=Network;P2P
 
 2. `git clone`
 1. `npm install`
-2. `npm build`
 3. visit chrome extensions menu (chrome://extensions)
 4. check developer mode checkbox
 5. load unpacked extension from capsule/chromium
