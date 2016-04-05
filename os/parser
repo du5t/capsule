@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var fs = require('fs')
-fs.writeFileSync('capsule.log', 'node parser was called but did not catch', 'utf8')
+fs.writeFileSync('capsule.log', 'node parser was called but nothing happened', 'utf8')
 
 var url = require('url')
 
@@ -16,9 +16,13 @@ for (var i = 0, len = payloadArray.length ; i<len ; i+=2) {
   payload[payloadArray[i]] = (payloadArray[i+1])
 }
 
-// decode body from base64
+// decode payload from base64
 payload.body = unescape(new Buffer(payload.body, 'base64').toString())
+if (typeof payload.comment === 'string') {
+  payload.body = payload.body.concat('\n<hr /><br />').concat(unescape(payload.comment))
+}
 payload.title = unescape(payload.title)
+payload.channel = unescape(payload.channel)
 
 // ssbify the dang thing, finally
 var ssbifyString = require('ssbify-string')
@@ -26,18 +30,23 @@ var ssbClient = require('ssb-client')
 
 ssbClient(function (err, sbot) {
   if (err) fs.writeFileSync('capsule.log', err, 'utf8')
-
+  
+  
   ssbifyString(
     sbot, payload.body,
     { ignoreBrokenLinks: true, url: payload.src, title: payload.title },
     function(err, res) {
       if (err) fs.writeFileSync('capsule.log', err, 'utf8')
+      else fs.writeFileSync('capsule.log', res, 'utf8')
+
+
+      // TODO preflight check to ensure a gross post is not pushed instead
 
       // publish a message
-      sbot.publish({ type: 'post', text: res, channel: 'test' }, 
+      sbot.publish({ type: 'post', text: res, channel: payload.channel || '' }, 
                    function (err, msg) {
                      if (err) fs.writeFileSync('capsule.log', err, 'utf8')
                    })
-
+  
     })
 })

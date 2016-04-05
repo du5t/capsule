@@ -66,7 +66,16 @@
        border-color: white;
        border-radius: 2px;
        min-height: 4em;
-       overflow-y: visible;
+       overflow-y: scroll;
+     }
+
+     #capsule-channel-field {
+       background-color: darkslategrey;
+       border-width: thick;
+       border-color: white;
+       border-radius: 2px;
+       height: 1.5em;
+       max-width: 100%;
      }
 
      #capsule-controls {
@@ -100,8 +109,11 @@
         no selected HTML could be parsed :(
       </div>
       <hr id="capsule-hrule" />
-      <div id="capsule-comment-field">
+      <div id="capsule-comment-field" contenteditable>
         Comments go here
+      </div>
+      <div id="capsule-channel-field" contenteditable>
+        Channel
       </div>
       <div id="capsule-controls">
         <button id="capsule-send">Send</button>

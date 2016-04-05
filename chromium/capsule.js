@@ -33,15 +33,27 @@ var encodeHTMLString = function(htmlString) {
   return btoa(encodeURIComponent(htmlString))
 }
 
-var sendHTML = function(htmlString) {
+var sendHTML = function(htmlString, comment, channel) {
   chrome.tabs.getSelected(function(selectedTab) {
-    let serialisedURI = encodeURI('ssb-capsule://?body='
-                                    .concat(encodeHTMLString(htmlString))
-                                    .concat('&src=').concat(selectedTab.url)
-                                    .concat('&title=').concat(selectedTab.title))
+    let serialisedURI = 'ssb-capsule://?body='
+                          .concat(encodeHTMLString(htmlString))
+                          .concat('&title=').concat(selectedTab.title)
+
+    if (typeof selectedTab.url === 'string') {
+      serialisedURI = serialisedURI.concat('&src=').concat(selectedTab.url)
+    }
+
+    if (typeof comment === 'string') {
+      serialisedURI = serialisedURI.concat('&comment=').concat(comment)
+    }
+
+    if (typeof channel === 'string') {
+      serialisedURI = serialisedURI.concat('&channel=').concat(channel)
+    }
+
       
     const serialiserTabProps = {
-      url: serialisedURI,
+      url: encodeURI(serialisedURI),
       active: true
     }
 
@@ -53,12 +65,34 @@ var sendHTML = function(htmlString) {
   })
 }
 
+var clearField = function() {
+  return function listener(event) {
+    event.target.innerText = ''
+    event.target.removeEventListener(event.type, listener)
+  }
+}
+
 var hookToElements = function() {
   const sendButton = document.getElementById('capsule-send')
+  const commentBox = document.getElementById('capsule-comment-field')
+  const channelField = document.getElementById('capsule-channel-field')
+
+  channelField.addEventListener('click', clearField())
+  commentBox.addEventListener('click', clearField())
+
   sendButton.addEventListener('click', function() {
     const selectedBox = document.getElementById('capsule-selected-content')
+    const commentBox = document.getElementById('capsule-comment-field')
+    const channelField = document.getElementById('capsule-channel-field')
 
-    sendHTML(selectedBox.innerHTML)
+    // optional args: comment, channel choice
+    const comment = (commentBox.innerText.length > 0 &&
+                     commentBox.innerText !== 'Comment here') ?
+      commentBox.innerText : null
+    const channel = channelField.innerText.length > 0 ?
+      channelField.innerText : null
+
+    sendHTML(selectedBox.innerHTML, comment, channel)
   })
 }
 
