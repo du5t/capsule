@@ -1,96 +1,135 @@
 <!doctype html>
-<html>
+<html class="bkg-color-p-2">
   <head>
     <title>Capsule</title>
     <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-        width: 400px;
-        height: 600px;
-      }
-      #status {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 400px;
-      }
-     #capsule-menu {
-       z-index: 999;
-       position: fixed;
-       top: 0;
-       right: 0;
+     .color-p-0 { color: #262675 }	/* Main P color */
+     .color-p-1 { color: #010105 }
+     .color-p-2 { color: #0E0E33 }
+     .color-p-3 { color: #EEEEFF }
+     .color-p-4 { color: #7878B2 }
+
+     .color-s-1-0 { color: #412071 }	/* Main S color (1) */
+     .color-s-1-1 { color: #030105 }
+     .color-s-1-2 { color: #1A0B31 }
+     .color-s-1-3 { color: #F4ECFF }
+     .color-s-1-4 { color: #8971AC }
+
+     .color-s-2-0 { color: #1D456C }	/* Main S color (2) */
+     .color-s-2-1 { color: #010305 }
+     .color-s-2-2 { color: #0A1D2F }
+     .color-s-2-3 { color: #ECF6FF }
+     .color-s-2-4 { color: #6B88A5 }
+
+     .color-comp-0 { color: #A78623 }	/* Main Comp color */
+     .color-comp-1 { color: #070601 }
+     .color-comp-2 { color: #49390B }
+     .color-comp-3 { color: #FFFAEA }
+     .color-comp-4 { color: #FEE69E }
+
+     .bkg-color-p-0 { background-color: #160035 }	/* Main P color */
+     .bkg-color-p-1 { background-color: #010105 }
+     .bkg-color-p-2 { background-color: #0F0F15 }
+     .bkg-color-p-3 { background-color: #EEEEFF }
+     .bkg-color-p-4 { background-color: #7878B2 }
+
+     .bkg-color-s-1-0 { background-color: #412071 }	/* Main S color (1) */
+     .bkg-color-s-1-1 { background-color: #030105 }
+     .bkg-color-s-1-2 { background-color: #222234 }
+     .bkg-color-s-1-3 { background-color: #F4ECEF }
+     .bkg-color-s-1-4 { background-color: #8971AC }
+
+     .bkg-color-s-2-0 { background-color: #0D1F30 }	/* Main S color (2) */
+     .bkg-color-s-2-1 { background-color: #010305 }
+     .bkg-color-s-2-2 { background-color: #000509 }
+     .bkg-color-s-2-3 { background-color: #979AB8 }
+     .bkg-color-s-2-4 { background-color: #6B88A5 }
+
+     .bkg-color-comp-0 { background-color: #A78623 }	/* Main Comp color */
+     .bkg-color-comp-1 { background-color: #070601 }
+     .bkg-color-comp-2 { background-color: #180810 }
+     .bkg-color-comp-3 { background-color: #FFFAEA }
+     .bkg-color-comp-4 { background-color: #A24545 }
+
+     body {
+       font-family: "Mako", sans-serif;
+       font-size: 100%;
        width: 400px;
        height: 600px;
-       background: #fff;
-       /* border-width: 2px; */
-       border-color: cornsilk !important;
+     }
+     
+     ::-webkit-scrollbar { width: 3px; height: 3px;}
+     ::-webkit-scrollbar-button {  background-color: #FFF; border-radius: 2px;}
+     ::-webkit-scrollbar-track {  background-color: #222;}
+     ::-webkit-scrollbar-track-piece { background-color: #333;}
+     ::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;}
+     ::-webkit-scrollbar-corner { background-color: black;}}
+     ::-webkit-resizer { background-color: #666;}
+
+     .section {
+       padding: 2px 1% 0px;
+       border: 2px solid black;
+       border-radius: 2px;
+     }
+     
+     #capsule-menu {
+       position: relative;
+       width: 400px;
+       height: 600px;
+       border: 1px solid black;
        border-radius: 5px;
      }
-
      #capsule-selected-content {
        position: relative;
-       width: 100%;
-       /* overflow-wrap: break-word; */
+       width: 97%;
        overflow: scroll;
-       background-color: inherit;
        max-height: 400px;
-       height: 40%;
+       height: 320px;
+       padding: 2px 1% 0px;
+       border: 2px solid black;
      }
 
-     #capsule-selected-content {}
-
      #capsule-hrule {
-       background-color: #EEE;
-       color: #EEE;
-       height:1px;
-       border:none;
+       height: 2px;
+       border-radius: 8px;
      }
 
      #capsule-title {
-       color: #EEE;
        text-align: center;
-       background: gray;
-       border-width: 2px;
-       border-color: black;
        border-radius: 2px;
        padding: 0.25rem;
-       border-left: 0.25rem;
-       border-right: 0.25rem;
      }
 
      #capsule-comment-field {
-       background-color: steelblue;
-       border-width: thick;
-       border-color: white;
        border-radius: 2px;
-       min-height: 4em;
+       min-height: 3em;
+       height: 8.4em;
        overflow-y: scroll;
      }
 
      #capsule-channel-field {
-       background-color: darkslategrey;
-       border-width: thick;
-       border-color: white;
        border-radius: 2px;
-       height: 1.5em;
+       border-width: 2px;
+       min-height: 1.5em;
        max-width: 100%;
+       padding-bottom: 3px;
      }
 
      #capsule-controls {
-       display: block;
-       text-align: center;
+       position: absolute;
+       bottom: 0;
+       display: flex;
+       justify-content: center;
        padding: 0.5rem;
+       height: 1.75em;
+       width: 95%;
      }
 
-     #capsule-button {
-       background-color: darkslategrey;
-       color: #EEE;
-       border: 0;
-       border-radius: 5px;
-       padding-top: 0.25rem;
-       padding-bottom: 0.25rem;
+     #capsule-controls button {
+       border: 3px solid black;
+       border-radius: 8px;
+       height: 2em;
+       min-width: 6em;
      }
     </style>
 
@@ -103,20 +142,20 @@
     <script src="capsule.js"></script>
   </head>
   <body>
-    <div id="capsule-menu">
-      <div id="capsule-title">Capsule</div>
-      <div id="capsule-selected-content">
+    <div id="capsule-menu" class="bkg-color-s-2-2">
+      <div id="capsule-title" class="section bkg-color-p-0 color-s-1-3">capsule</div>
+      <div id="capsule-selected-content" class="section bkg-color-comp-2 color-comp-3">
         no selected HTML could be parsed :(
       </div>
-      <hr id="capsule-hrule" />
-      <div id="capsule-comment-field" contenteditable>
-        Comments go here
+      <hr id="capsule-hrule" class="section bkg-color-comp-4" />
+      <div id="capsule-comment-field" class="section bkg-color-s-1-2 color-s-2-3" contenteditable>
+        comments go here
       </div>
-      <div id="capsule-channel-field" contenteditable>
-        Channel
+      <div id="capsule-channel-field" class="section bkg-color-s-1-2 color-p-3" contenteditable>
+        channel name
       </div>
-      <div id="capsule-controls">
-        <button id="capsule-send">Send</button>
+      <div id="capsule-controls" class="section bkg-color-s-2-0">
+        <button id="capsule-send" class="bkg-color-comp-4 color-comp-3">send</button>
       </div>
     </div>
   </body>
