@@ -1,5 +1,9 @@
 # capsule
 
+*cypherspace re-transmitter*
+
+![screenshot](./screenshot.png)
+
 ## how to use
 
 ### set up a URI handler for protocol ssb-capsule
