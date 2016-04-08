@@ -279,10 +279,6 @@ function Snapshooter(root) {
 
 var selectionDiv = document.createElement('div')
 var selection = window.getSelection().getRangeAt(0)
-var startNode = selection.startContainer.parentNode.cloneNode(true)
-var endNode = selection.endContainer.parentNode.cloneNode(true)
-
-selectionDiv.appendChild(startNode)
-selectionDiv.appendChild(endNode)
+selectionDiv.appendChild(selection.cloneContents())
 
 Snapshooter(selectionDiv)
