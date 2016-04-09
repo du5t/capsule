@@ -35,10 +35,9 @@ var ssbClient = require('ssb-client')
 ssbClient(function (err, sbot) {
   if (err) fs.writeFileSync('capsule.log', err, 'utf8')
   
-  
   ssbifyString(
     sbot, payload.body,
-    { ignoreBrokenLinks: true, url: payload.src, title: payload.title },
+    { ignoreBrokenImgLinks: true, url: payload.src, title: payload.title },
     function(err, res) {
       if (err) fs.writeFileSync('capsule.log', err, 'utf8')
       else fs.writeFileSync('capsule.log', res, 'utf8')
@@ -49,7 +48,7 @@ ssbClient(function (err, sbot) {
       // publish a message
       sbot.publish({ type: 'post', text: res, channel: payload.channel || '' }, 
                    function (err, msg) {
-                     if (err) fs.writeFileSync('capsule.log', err, 'utf8')
+                     if (err) fs.writeFileSync('capsule.log', err.message, 'utf8')
                    })
   
     })
