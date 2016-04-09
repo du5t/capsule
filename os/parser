@@ -12,9 +12,13 @@ payloadArray = parsedURI.query.split(/[\=\&]/)
 
 // convert to key-val dict
 var payload = {}
-for (var i = 0, len = payloadArray.length ; i<len ; i+=2) {
-  payload[payloadArray[i]] = (payloadArray[i+1])
-}
+var keysToParse = ['body', 'title', 'src', 'comment', 'channel', 'mentions']
+keysToParse.forEach(function(key) {
+  const keyPos = payloadArray.indexOf(key)
+  if (keyPos !== -1) {
+    payload[key] = payloadArray[keyPos + 1]
+  }
+})
 
 // decode payload from base64
 payload.body = unescape(new Buffer(payload.body, 'base64').toString())
@@ -24,7 +28,7 @@ if (typeof payload.comment === 'string') {
 payload.title = unescape(payload.title)
 payload.channel = unescape(payload.channel)
 
-// ssbify the dang thing, finally
+// ssbify the thing, finally
 var ssbifyString = require('ssbify-string')
 var ssbClient = require('ssb-client')
 
