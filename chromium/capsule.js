@@ -13,15 +13,16 @@ var getSelectedHTML = function() {
 }
 
 var renderSelectedHTML = function(selection) {
-  const parsedSelection = JSON.parse(selection)  
-  
-  var modify = []
+  chrome.tabs.getSelected(function(selectedTab) {
+    const titleField = document.getElementById('capsule-title-field')
+    titleField.innerText = selectedTab.title
 
-  const selectedBox = document.getElementById('capsule-selected-content')
-  
-  if (parsedSelection.html) {
-    selectedBox.innerHTML = parsedSelection.html
-  }
+    const parsedSelection = JSON.parse(selection)
+    const selectedBox = document.getElementById('capsule-selected-content')
+    if (parsedSelection.html) {
+      selectedBox.innerHTML = parsedSelection.html
+    }
+  })
 }
 
 var encodeHTMLString = function(htmlString) {
@@ -33,11 +34,11 @@ var encodeHTMLString = function(htmlString) {
   return btoa(encodeURIComponent(htmlString))
 }
 
-var sendHTML = function(htmlString, comment, channel) {
+var sendHTML = function(htmlString, title, comment, channel) {
   chrome.tabs.getSelected(function(selectedTab) {
     let serialisedURI = 'ssb-capsule://?body='
                           .concat(encodeHTMLString(htmlString))
-                          .concat('&title=').concat(selectedTab.title)
+                          .concat('&title=').concat(title)
 
     if (typeof selectedTab.url === 'string') {
       serialisedURI = serialisedURI.concat('&src=').concat(selectedTab.url)
@@ -51,7 +52,7 @@ var sendHTML = function(htmlString, comment, channel) {
       serialisedURI = serialisedURI.concat('&channel=').concat(channel)
     }
 
-      
+
     const serialiserTabProps = {
       url: encodeURI(serialisedURI),
       active: true
@@ -74,25 +75,32 @@ var clearField = function() {
 
 var hookToElements = function() {
   const sendButton = document.getElementById('capsule-send')
+  const titleField = document.getElementById('capsule-title-field')
   const commentBox = document.getElementById('capsule-comment-field')
   const channelField = document.getElementById('capsule-channel-field')
 
   channelField.addEventListener('click', clearField())
+  channelField.addEventListener('focus', clearField())
   commentBox.addEventListener('click', clearField())
+  commentBox.addEventListener('focus', clearField())
 
   sendButton.addEventListener('click', function() {
     const selectedBox = document.getElementById('capsule-selected-content')
+    const titleField = document.getElementById('capsule-title-field')
     const commentBox = document.getElementById('capsule-comment-field')
     const channelField = document.getElementById('capsule-channel-field')
 
-    // optional args: comment, channel choice
+    // optional args: title, comment, channel choice
+    const title = (titleField.innerText.length > 0 &&
+                   titleField.innerText !== 'title here') ?
+      titleField.innerText : null
     const comment = (commentBox.innerText.length > 0 &&
-                     commentBox.innerText !== 'Comment here') ?
+                     commentBox.innerText !== 'comment here') ?
       commentBox.innerText : null
     const channel = channelField.innerText.length > 0 ?
       channelField.innerText : null
 
-    sendHTML(selectedBox.innerHTML, comment, channel)
+    sendHTML(selectedBox.innerHTML, title, comment, channel)
   })
 }
 
