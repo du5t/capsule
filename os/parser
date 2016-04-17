@@ -21,7 +21,11 @@ keysToParse.forEach(function(key) {
 })
 
 // decode payload from base64
-payload.body = unescape(new Buffer(payload.body, 'base64').toString())
+var simpleDecode = function(b64str) { 
+  return new Buffer(b64str, 'base64').toString()
+}
+
+payload.body = unescape(simpleDecode(payload.body))
 if (typeof payload.comment === 'string') {
   payload.body = payload.body.concat('\n<hr /><br />').concat(unescape(payload.comment))
 }

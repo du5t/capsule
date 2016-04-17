@@ -31,7 +31,7 @@ var encodeHTMLString = function(htmlString) {
   // for how terrible this can get
 
   // anyway we're just going to base64 it
-  return btoa(encodeURIComponent(htmlString))
+  return btoa(escape(htmlString))
 }
 
 var sendHTML = function(htmlString, title, comment, channel) {
