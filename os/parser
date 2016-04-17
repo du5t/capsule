@@ -27,10 +27,10 @@ var simpleDecode = function(b64str) {
 
 payload.body = unescape(simpleDecode(payload.body))
 if (typeof payload.comment === 'string') {
-  payload.body = payload.body.concat('\n<hr /><br />').concat(unescape(payload.comment))
+  payload.body = payload.body.concat('\n<hr /><br />').concat(payload.comment)
 }
 payload.title = unescape(payload.title)
-payload.channel = unescape(payload.channel)
+payload.channel = payload.channel
 
 // ssbify the thing, finally
 var ssbifyString = require('ssbify-string')
