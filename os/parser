@@ -3,6 +3,7 @@
 var fs = require('fs')
 fs.writeFileSync('capsule.log', 'node parser was called but nothing happened', 'utf8')
 
+
 var url = require('url')
 
 // parse URL, split up query params
@@ -27,7 +28,7 @@ var simpleDecode = function(b64str) {
 
 payload.body = unescape(simpleDecode(payload.body))
 if (typeof payload.comment === 'string') {
-  payload.body = payload.body.concat('\n<hr /><br />').concat(payload.comment)
+  payload.body = payload.body.concat('\n<hr /><br />').concat(unescape(payload.comment))
 }
 payload.title = unescape(payload.title)
 payload.channel = payload.channel
@@ -46,11 +47,26 @@ ssbClient(function (err, sbot) {
       if (err) fs.writeFileSync('capsule.log', err, 'utf8')
       else fs.writeFileSync('capsule.log', res, 'utf8')
 
+      // decode mentions, extract them
+      const mentionTest = new RegExp(/\s+@\w+/g)
+      const matchedMentions = res.match(mentionTest)
+      var mentions = null
+      if (matchedMentions instanceof Array) {
+        mentions = matchedMentions.map(function(mention) {
+          if (typeof mention === 'string') {
+            return mention.split('@')[1]
+          }
+        })
+      }
 
       // TODO preflight check to ensure a gross post is not pushed instead
 
       // publish a message
-      sbot.publish({ type: 'post', text: res, channel: payload.channel || '' }, 
+      sbot.publish({ type: 'post',
+                     text: res,
+                     channel: payload.channel || '',
+                     mentions: mentions
+                   }, 
                    function (err, msg) {
                      if (err) fs.writeFileSync('capsule.log', err.message, 'utf8')
                    })
