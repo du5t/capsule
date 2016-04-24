@@ -21,9 +21,19 @@ Terminal=false
 NoDisplay=true
 Type=Application
 StartupNotify=true
-MimeType=x-scheme-handler/ssbcapsule
+MimeType=x-scheme-handler/ssb-capsule
 Categories=Network;P2P
 ```
+
+run the following command to associate the handler with the `ssb-capsule`
+protocol:
+
+```
+xdg-mime default ssb-capsule.desktop x-scheme-handler/ssb-capsule
+```
+
+to check: if `xdg-mime query default x-scheme-handler/ssb-capsule` outputs
+`ssb-capsule.desktop` when you run it, you should be all set.
 
 ### install addon and use
 
